@@ -4,12 +4,11 @@ import NavBar from '../NavBar/NavBar';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import ContactModal from './ContactModal/ContactModal';
-import axios from 'axios';
 
 export default class SellForm extends React.Component {
     constructor(props){
         super(props)
-        this.state = {brand: null, model: null, km: null, owners: 0, validPapers: null, validInsurance: null, accident: null, type: null, images: null, price: null}
+        this.state = {brand: null, model: null, km: null, owners: 0, validPapers: null, validInsurance: null, accident: null, type: null, images: null, price: null, year: null}
         this.onFileChange = this.onFileChange.bind(this);
     }
     handleBrandChange = (event) => {
@@ -42,12 +41,15 @@ export default class SellForm extends React.Component {
     onFileChange(e) {
         this.setState({ images: e.target.files })
     }
+    handleYearChange = (event) => {
+        this.setState({year: event.target.value})
+    }
 
     render(){
         return(
             <div>
                 <NavBar/>
-                <Container>
+                <Container style={{marginBottom: '2%'}}>
                     <Row>
                         <Col sm="12" md="4" lg="3">
                         </Col>
@@ -125,13 +127,10 @@ export default class SellForm extends React.Component {
                                             </TextField>
                                         </Col>
                                     </Row>
-                                    <Row>
-                                        <Col style={{textAlign: 'center', width: '100%'}}>
-                                            <label htmlFor="images">Select Images</label>
-                                            <FormInput id="images" onChange={this.onFileChange} placeholder="Upload Images" type="file" multiple/>
-                                        </Col>
-                                    </Row>
                                     <Row style={{marginTop: '10px'}}>
+                                        <Col style={{marginTop: '-10px'}}>
+                                            <TextField id="standard-basic" label="Year of Purchase" onChange={this.handleYearChange}/>
+                                        </Col>
                                         <Col>
                                             <InputGroup className="mb2">
                                                 <InputGroupAddon type="prepend">
@@ -142,8 +141,14 @@ export default class SellForm extends React.Component {
                                         </Col>
                                     </Row>
                                     <Row>
+                                        <Col style={{textAlign: 'center', width: '100%'}}>
+                                            <label htmlFor="images">Select Images</label>
+                                            <FormInput id="images" onChange={this.onFileChange} placeholder="Upload Images" type="file" multiple/>
+                                        </Col>
+                                    </Row>
+                                    <Row>
                                         <Col style={{textAlign: 'center', marginTop: '3%'}}>
-                                        <ContactModal brand={this.state.brand}  model={this.state.model} km={this.state.km} owners={this.state.owners} papers={this.state.validPapers} insurance={this.state.validInsurance} accident={this.state.accident} type={this.state.type} images={this.state.images} price={this.state.price}/>
+                                            <ContactModal brand={this.state.brand}  model={this.state.model} km={this.state.km} owners={this.state.owners} papers={this.state.validPapers} insurance={this.state.validInsurance} accident={this.state.accident} type={this.state.type} images={this.state.images} price={this.state.price} year={this.state.year}/>
                                         </Col>
                                     </Row>
                                 </CardBody>

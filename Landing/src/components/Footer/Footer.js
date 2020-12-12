@@ -4,18 +4,19 @@ import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import InstagramIcon from '@material-ui/icons/Instagram';
 import TwitterIcon from '@material-ui/icons/Twitter';
+import {Row, Col} from 'shards-react'
 
 const useStyles = makeStyles({
   root: {
     width: '100%',
     background: 'black',
-    // bottom: 0,
-    // position: 'fixed',
-     marginTop: '10%'
+    bottom: 0,
+    position: 'static',
+    // //marginTop: '10%'
   },
   icon: {
       color: '#fff',
-      fontSize: '3em'
+      fontSize: '1.5em'
   }
 });
 
@@ -24,8 +25,15 @@ export default function LabelBottomNavigation() {
 
   return (
     <BottomNavigation className={classes.root}>
-      <BottomNavigationAction  href="#" target="_blank" label="Instagram" icon={<InstagramIcon className={classes.icon}/>} />
-      <BottomNavigationAction href="#" target="_blank" label="Twitter" icon={<TwitterIcon className={classes.icon}/>} />
+          <Col sm="12" md="4" lg="3">
+          </Col>
+          <Col sm="12" md="4" lg="6" style={{textAlign: 'center'}}>
+              <TwitterIcon className={classes.icon}/>
+              <InstagramIcon className={classes.icon}/> <br/>
+              <span style={{color: 'white'}}>Powered by Vaibhav Muchandi</span>
+          </Col>
+          <Col sm="12" md="4" lg="3">
+          </Col>
     </BottomNavigation>
   );
 }

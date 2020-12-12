@@ -76,6 +76,7 @@ export default class BasicModalExample extends React.Component {
           formData.append('accident', this.props.accident)
           formData.append('type', this.props.type)
           formData.append('price', this.props.price)
+          formData.append('year', this.props.year)
           axios.post("http://localhost:4000/upload", formData, {
           }).then(res => {
               this.setState({openOtp: false, open: false, thankYouModal: true})

@@ -5,7 +5,8 @@ const bodyParser = require('body-parser')
 const { v4: uuidv4 } = require ('uuid');
 const mongoose = require('mongoose')
 let Vehicle = require('./models/Vehicle')
-let User = require('./models/User')
+let User = require('./models/User');
+const { response } = require('express');
 const app = express()
 
 
@@ -60,7 +61,8 @@ app.post('/upload', upload.array('images', 6), async(req, res, next) => {
         insurance: req.body.insurance,
         accident: req.body.accident,
         type: req.body.type,
-        price: req.body.price
+        price: req.body.price,
+        year: req.body.year
     }
     const reqFiles = []
     const url = req.protocol+'://'+req.get('host')
@@ -87,7 +89,9 @@ async function submitSellQuery(reqFiles, user, vehicle){
         accident: vehicle.accident,
         type: vehicle.type,
         images: reqFiles,
-        price: vehicle.price
+        price: vehicle.price,
+        year: vehicle.year,
+        papers: vehicle.papers
     })
     console.log(reqFiles)
     let result = await V.save()
@@ -114,6 +118,28 @@ async function submitSellQuery(reqFiles, user, vehicle){
 
 app.get('/public/:id', (req, res) => {
     res.sendFile(__dirname + '/public/'+req.params.id)
+})
+
+app.get('/allvehicles', (req, res) => {
+    Vehicle.find({}).sort({date: 'descending'})
+        .then(response => {
+            let v = []
+            while(response.length>0){
+                v.push(response.splice(0, 4))
+            }
+            res.status(200).json({success: true, data: v})
+        })
+})
+
+app.get('/display/:id', (req, res) => {
+    const id = req.params.id
+    Vehicle.find({_id: id})
+        .then(result => {
+            res.status(200).json({data: result})
+        })
+        .catch(err => {
+            res.status(400).json({message: "Some error has occured!"})
+        })
 })
 
 app.listen(4000, () => {

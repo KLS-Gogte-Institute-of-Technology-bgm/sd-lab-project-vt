@@ -1,35 +1,35 @@
 import React from "react";
 import { Row, Col, Card, CardBody, CardImg, CardTitle, Button, CardFooter } from 'shards-react';
+import DisplayBike from '../../DisplayBike/DisplayBike';
+import {Link, Switch, Route, useParams} from 'react-router-dom';
 
-export default class BikeCard extends React.Component {
-    render(){
+export default function BikeCard(props) {
         return(
             <Col style={{marginBottom: '2%'}}>
             <Card style={{ maxWidth: "250px" }}>
-                <CardImg top src="https://place-hold.it/300x200"/>
+                <CardImg top src={props.image}/>
                 <CardBody style={{padding: '3%'}}>
-                    <CardTitle>Bike Name</CardTitle>
+                    <CardTitle>{props.brand} {props.model} </CardTitle>
                     <Row style={{textAlign: 'center'}}>
                         <Col>
-                            2013
+                            {props.year}
                         </Col>
                         <Col>
-                            23000KM
+                            {props.km} KM
                         </Col>
                     </Row>
                 </CardBody>
                 <CardFooter>
                     <Row style={{textAlign: 'center'}}>
                         <Col>
-                            <span style={{fontSize: '1em', fontWeight: 'bold', color: 'black'}}>Rs 60000</span>
+                            <span style={{fontSize: '1em', fontWeight: 'bold', color: 'black'}}>₹ {props.price}</span>
                         </Col>
                         <Col>
-                            <Button style={{padding: '10%'}} outline>View</Button>
+                            <Link to={'/display/'+props.id} params={useParams()}><Button style={{padding: '10%'}} outline>View</Button></Link>
                         </Col>
                     </Row>
                 </CardFooter>
             </Card>
         </Col>
         )
-    }
 }

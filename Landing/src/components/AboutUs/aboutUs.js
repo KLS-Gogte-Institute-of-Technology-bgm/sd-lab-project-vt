@@ -6,12 +6,14 @@ import Container from '@material-ui/core/Container';
 import useWindowPosition from '../../hook/useWindowPosition';
 import Avatar from '@material-ui/core/Avatar';
 import pic from './1.png'
+import Footer from '../Footer/Footer'
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     backgroundColor: 'black',
     color: 'white',
+    //marginBottom: '5%'
   },
   paper: {
     padding: theme.spacing(2),
@@ -58,6 +60,7 @@ export default function AutoGrid() {
         </Grid>
       </Grid>
       </Container>
+      
     </div>
   );
 }

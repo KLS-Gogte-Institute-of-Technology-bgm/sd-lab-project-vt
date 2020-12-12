@@ -1,31 +1,51 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import NavBar from '../NavBar/NavBar';
 import { Container, Row, Col, Card, CardTitle, CardBody, Button, CardSubtitle, CardFooter } from 'shards-react';
+import { useParams, withRouter } from 'react-router-dom'
 import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
 import AliceCarousel from 'react-alice-carousel';
 import "./alice-carousel.css";
+import axios from 'axios';
 
 const handleDragStart = (e) => e.preventDefault();
 
+export default function DisplayBike() {
+        let {id} = useParams()
+        const [vehicle, setVehicle] = useState(null)
+        const [error, setError] = useState(null)
+        
+        useEffect(() => {
+            function fetchVehicle(){
+                axios.get('http://localhost:4000/display/'+id)
+                .then(response => {
+                    setVehicle(response.data.data[0])
+                    console.log(vehicle)
+                })
+                .catch(err => {
+                    setError("Some error has occured!")
+                })
+            }
+            fetchVehicle()
+        }, [])
 
-export default class DisplayBike extends React.Component {
-    render(){
+        
         return(
             <div>
                 <NavBar/>
-                <Container>
+                {vehicle ? 
+                <Container style={{marginBottom: '4%'}}>
                     <Row>
                         <Col sm="12" lg="6" style={{marginTop: '2%'}}>
                         <Row>
                             <Col sm="12" md="3">
                             </Col>
                             <Col sm="12" md="6" lg="12">
-                                <Paper elevation={3}>
+                                <Paper elevation={3} style={{height: '100%', width: '100%'}}>
                                     <AliceCarousel mouseTracking disableDotsControls={true}>
-                                        <img src = 'https://picsum.photos/id/1018/650/450/' onDragStart={handleDragStart}/>
-                                        <img src = 'https://picsum.photos/id/1015/650/450/' onDragStart={handleDragStart}/>
-                                        <img src = 'https://picsum.photos/id/1019/650/450/' onDragStart={handleDragStart}/>
+                                        {vehicle.images.map(link => {
+                                            return(<img src = {link} onDragStart={handleDragStart} alt={vehicle.brand} style={{width: '100%', height: '100%'}}/>)
+                                        })}
                                     </AliceCarousel>
                                 </Paper>
                             </Col>
@@ -35,32 +55,32 @@ export default class DisplayBike extends React.Component {
                         </Col>
                         <Col sm="12" lg="6" style={{textAlign: 'center', marginTop: '2%'}}>
                             <Card>
-                                <CardTitle style={{textAlign: 'left', marginTop: '5%',marginLeft: '5%', fontSize: '25px'}}>Bike Name</CardTitle>
-                                <CardSubtitle style={{textAlign: 'left',marginLeft: '5%', marginTop: '1%'}}>2007</CardSubtitle>
+                                <CardTitle style={{textAlign: 'left', marginTop: '5%',marginLeft: '5%', fontSize: '25px'}}>{vehicle.brand} {vehicle.model}</CardTitle>
+                                <CardSubtitle style={{textAlign: 'left',marginLeft: '5%', marginTop: '1%'}}>{vehicle.year}</CardSubtitle>
                                 <CardBody style={{textAlign: 'left'}}>
                                     <h6>Details:</h6>
                                     <table style={{width: '100%'}}>
                                     <tr>
                                         <td style={{fontWeight: 'bold'}}>Brand</td>
-                                        <td>Bajaj</td>
+                                        <td>{vehicle.brand}</td>
                                         <td style={{fontWeight: 'bold'}}>Model</td>
-                                        <td>Avenger</td>
+                                        <td>{vehicle.model}</td>
                                     </tr>
                                     <tr>
                                         <td style={{fontWeight: 'bold'}}>KM Driven</td>
-                                        <td>16000</td>
+                                        <td>{vehicle.kmDriven}</td>
                                         <td style={{fontWeight: 'bold'}}>Owner</td>
-                                        <td>3</td>
+                                        <td>{vehicle.owners}</td>
                                     </tr>
                                     <tr>
                                         <td style={{fontWeight: 'bold'}}>Papers Valid</td>
-                                        <td>Yes</td>
+                                        <td>{vehicle.papers}</td>
                                         <td style={{fontWeight: 'bold'}}>Insurance Valid</td>
-                                        <td>Yes</td>
+                                        <td>{vehicle.insurance}</td>
                                     </tr>
                                     <tr>
                                         <td style={{fontWeight: 'bold'}}>Accident</td>
-                                        <td>No</td>
+                                        <td>{vehicle.accident}</td>
                                     </tr>
                                     </table>
                                     <hr/>
@@ -69,7 +89,7 @@ export default class DisplayBike extends React.Component {
                                 <CardFooter>
                                     <Row>
                                         <Col style={{textAlign: 'left'}}>
-                                            <h4>Price</h4>
+                                            <h4>Rs. {vehicle.price}</h4>
                                         </Col>
                                         <Col style={{textAlign: 'right'}}>
                                             <Button primary>Contact Us</Button>
@@ -80,7 +100,7 @@ export default class DisplayBike extends React.Component {
                         </Col>
                     </Row>
                 </Container>
+                 : null }
             </div>
         )
-    }
 }
