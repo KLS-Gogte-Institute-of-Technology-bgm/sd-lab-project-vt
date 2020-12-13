@@ -1,13 +1,12 @@
 import React from "react";
 import { Row, Col, Card, CardBody, CardImg, CardTitle, Button, CardFooter } from 'shards-react';
-import DisplayBike from '../../DisplayBike/DisplayBike';
-import {Link, Switch, Route, useParams} from 'react-router-dom';
+import {Link, useParams} from 'react-router-dom';
 
 export default function BikeCard(props) {
         return(
             <Col style={{marginBottom: '2%'}}>
             <Card style={{ maxWidth: "250px" }}>
-                <CardImg top src={props.image}/>
+                <CardImg top src={props.image} style={{padding: '5px'}}/>
                 <CardBody style={{padding: '3%'}}>
                     <CardTitle>{props.brand} {props.model} </CardTitle>
                     <Row style={{textAlign: 'center'}}>

@@ -10,7 +10,9 @@ const vehicleSchema = new mongoose.Schema({
     accident: String,
     type: String,
     images: [String],
-    price: String
+    price: String,
+    registrationNo: String,
+    isLive: Boolean
 })
 
 module.exports = mongoose.model('Vehicle', vehicleSchema)

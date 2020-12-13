@@ -54,7 +54,7 @@ export default class NavBar extends React.Component {
               </NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href="#" active>
+              <NavLink href="/sell" active>
                 Sell
               </NavLink>
             </NavItem>

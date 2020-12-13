@@ -74,8 +74,8 @@ export default function Header(){
                     open={Boolean(anchorEl)}
                     onClose={handleClose}
                     >
-                        <MenuItem onClick={handleClose}>Buy</MenuItem>
-                        <MenuItem onClick={handleClose}>Sell</MenuItem>
+                        <MenuItem href="/buy" onClick={handleClose}>Buy</MenuItem>
+                        <MenuItem href="/sell" onClick={handleClose}>Sell</MenuItem>
                         <MenuItem onClick={handleClose}>Contact Us</MenuItem>
                     </Menu>
                     </div>

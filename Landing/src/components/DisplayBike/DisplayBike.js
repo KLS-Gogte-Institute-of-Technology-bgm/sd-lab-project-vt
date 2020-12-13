@@ -35,6 +35,7 @@ export default function DisplayBike() {
                 <NavBar/>
                 {vehicle ? 
                 <Container style={{marginBottom: '4%'}}>
+                    <Row style={{marginTop: '20px', marginBottom: '-5px'}}><h2>Used bike in Belgaum</h2></Row>
                     <Row>
                         <Col sm="12" lg="6" style={{marginTop: '2%'}}>
                         <Row>

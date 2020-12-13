@@ -4,9 +4,10 @@ const multer = require('multer')
 const bodyParser = require('body-parser')
 const { v4: uuidv4 } = require ('uuid');
 const mongoose = require('mongoose')
+const adminRoutes = require('./auth/auth')
 let Vehicle = require('./models/Vehicle')
 let User = require('./models/User');
-const { response } = require('express');
+const middleware = require('./auth/isLoggedIn');
 const app = express()
 
 
@@ -14,6 +15,8 @@ app.use(cors())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(express.static(__dirname + '/public'));
+
+app.use('/admin', adminRoutes)
 
 const DIR = './public/'
 
@@ -91,7 +94,8 @@ async function submitSellQuery(reqFiles, user, vehicle){
         images: reqFiles,
         price: vehicle.price,
         year: vehicle.year,
-        papers: vehicle.papers
+        papers: vehicle.papers,
+        isLive: false
     })
     console.log(reqFiles)
     let result = await V.save()
@@ -121,7 +125,7 @@ app.get('/public/:id', (req, res) => {
 })
 
 app.get('/allvehicles', (req, res) => {
-    Vehicle.find({}).sort({date: 'descending'})
+    Vehicle.find({isLive: true}).sort({date: 'descending'})
         .then(response => {
             let v = []
             while(response.length>0){
@@ -140,6 +144,23 @@ app.get('/display/:id', (req, res) => {
         .catch(err => {
             res.status(400).json({message: "Some error has occured!"})
         })
+})
+
+app.get('/admin/getallsellers', middleware.isLoggedIn, (req, res) => {
+    User.find({queryType: "Sell"})
+        .then(resp => {
+            res.status(200).json({success: true, data: resp})
+        })
+        .catch(err => {
+            console.log(err)
+        })
+})
+
+app.post('/admin/setdisplay', async(req, res) => {
+    const id = req.body.id
+    const isLiveStatus = req.body.isLiveStatus
+    await Vehicle.updateOne({_id: id}, {isLive: isLiveStatus})
+    res.status(200).json({success: true})
 })
 
 app.listen(4000, () => {
