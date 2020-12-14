@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import NavBar from '../NavBar/NavBar';
-import { Container, Row, Col, Card, CardTitle, CardBody, Button, CardSubtitle, CardFooter } from 'shards-react';
-import { useParams, withRouter } from 'react-router-dom'
+import { Container, Row, Col, Card, CardTitle, CardBody, CardSubtitle, CardFooter } from 'shards-react';
+import { useParams} from 'react-router-dom'
 import Paper from '@material-ui/core/Paper';
 import ContactModal from './ContactModal/ContactModal';
 import AliceCarousel from 'react-alice-carousel';

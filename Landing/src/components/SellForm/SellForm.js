@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Row, Col, Card, FormInput, CardBody, CardHeader, InputGroup, InputGroupAddon, InputGroupText} from 'shards-react';
+import { Container, Row, Col, Card, FormInput, CardBody, CardHeader} from 'shards-react';
 import NavBar from '../NavBar/NavBar';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -131,19 +131,9 @@ export default class SellForm extends React.Component {
                                         <Col style={{marginTop: '-10px'}}>
                                             <TextField id="standard-basic" label="Year of Purchase" onChange={this.handleYearChange}/>
                                         </Col>
-                                        <Col>
-                                            <InputGroup className="mb2">
-                                                <InputGroupAddon type="prepend">
-                                                    <InputGroupText>₹</InputGroupText>
-                                                </InputGroupAddon>
-                                                <FormInput onChange={this.handlePriceChange} placeholder = "Price"/>
-                                            </InputGroup>
-                                        </Col>
-                                    </Row>
-                                    <Row>
                                         <Col style={{textAlign: 'center', width: '100%'}}>
-                                            <label htmlFor="images">Select Images</label>
                                             <FormInput id="images" onChange={this.onFileChange} placeholder="Upload Images" type="file" multiple/>
+                                            <label htmlFor="images">Upload Images</label>
                                         </Col>
                                     </Row>
                                     <Row>

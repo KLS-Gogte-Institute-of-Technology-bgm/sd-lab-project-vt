@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {Button, Container, Row, Col, Modal, ModalBody, ModalHeader, ModalFooter, FormInput} from 'shards-react'
+import {Button, Row, Col, Modal, ModalBody, ModalHeader, ModalFooter, FormInput} from 'shards-react'
 import Switch from '@material-ui/core/Switch';
 import AliceCarousel from 'react-alice-carousel';
 import axios from 'axios'
@@ -8,6 +8,7 @@ const handleDragStart = (e) => e.preventDefault();
 
 export default function BikeCard(props){
     const [state, setState] = useState({checkedB: null});
+    const [checkedC, setCheckedC] = useState(null)
     const [token, setToken] = useState(null)
     const [openPriceModal, setPriceModal] = useState(false)
     const [vehicle, setVehicle] = useState(null)
@@ -18,22 +19,36 @@ export default function BikeCard(props){
     const [description, handleDescriptionChange] = useState(null)
 
     const handleChange = async(event) => {
-    setState({ ...state, [event.target.name]: event.target.checked });
-    await axios.post('http://localhost:4000/admin/setdisplay', {
-        id: vehicle._id,
-        isLiveStatus: event.target.checked
-    },{
-        headers: {
-            'x-auth-token': token
-    }})
-    };
+        setState({ ...state, [event.target.name]: event.target.checked });
+        await axios.post('http://localhost:4000/admin/setdisplay', {
+                id: vehicle._id,
+                isLiveStatus: event.target.checked
+            },{
+            headers: {
+                'x-auth-token': token
+            }})
+        };
+
+    const handleChangeC = async(event) => {
+        setCheckedC(event.target.checked)
+        await axios.post('http://localhost:4000/admin/setfeatured', {
+            id: vehicle._id,
+            isFeatured: event.target.checked
+        },{
+            headers: {
+                'x-auth-token': token
+        }})
+        };
 
     useEffect(() => {
         async function getVehicle(){
           const response = await axios.get('http://localhost:4000/display/'+props.seller.vehicle)
           setVehicle(response.data.data[0])
           const isLive = response.data.data[0].isLive
+          const isFeatured = response.data.data[0].isFeatured
+          console.log(isFeatured)
           setState({checkedB: isLive})
+          setCheckedC(isFeatured)
           const t = await localStorage.getItem('token')
           setToken(t)
         }
@@ -156,14 +171,26 @@ export default function BikeCard(props){
                             </Row>
                         </Col>
                         <Col sm="12" md="4" lg="3">
-                        <h4>Display for Sale</h4>
-                        <Switch
-                            checked={state.checkedB}
-                            onChange={handleChange}
-                            color="primary"
-                            name="checkedB"
-                            inputProps={{ 'aria-label': 'primary checkbox' }}
-                        />
+                            <Row>
+                                <h4>Display for Sale</h4>
+                                <Switch
+                                    checked={state.checkedB}
+                                    onChange={handleChange}
+                                    color="primary"
+                                    name="checkedB"
+                                    inputProps={{ 'aria-label': 'primary checkbox' }}
+                                />
+                            </Row>
+                            <Row>
+                                <h4>Featured Ad</h4>
+                                <Switch
+                                    checked={checkedC}
+                                    onChange={handleChangeC}
+                                    color="primary"
+                                    name="checkedB"
+                                    inputProps={{ 'aria-label': 'primary checkbox' }}
+                                />
+                            </Row>
                         </Col>
                     </Row> 
                 </Col>

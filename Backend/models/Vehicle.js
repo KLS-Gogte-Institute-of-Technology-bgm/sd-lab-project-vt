@@ -13,7 +13,9 @@ const vehicleSchema = new mongoose.Schema({
     description: String,
     price: String,
     registrationNo: String,
-    isLive: Boolean
+    isLive: Boolean,
+    isFeatured: Boolean,
+    yearOfPurchase: String
 })
 
 module.exports = mongoose.model('Vehicle', vehicleSchema)

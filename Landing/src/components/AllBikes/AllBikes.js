@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from "react";
 import NavBar from "../NavBar/NavBar";
 import BikeCard from './BikeCard/BikeCard';
-import { Container, Row, Col } from 'shards-react';
+import { Container, Row } from 'shards-react';
+import FeaturedVehicles from './FeaturedVehicles/FeaturedVehicles'
 import axios from 'axios'
 
 export default function AllBikes(){
@@ -18,40 +19,30 @@ export default function AllBikes(){
         }
         getAllVehicles()
     }, [])
-        // function bikeRow(vehicle){
-        //     return(
-        //     <Row style={{alignItems: 'center', marginTop: '1.5%', marginBottom: '1%'}}>
-        //         {vehicle.map(v => {
-        //             //bikeCol(v)
-        //             return(
-        //                 <Col>
-        //                     <Row>
-        //                         <BikeCard brand={v.brand} model={v.model} km={v.kmDriven} image={v.images[0]} price={v.price}/>
-        //                     </Row>
-        //                 </Col>
-        //             )  
-        //         }) } 
-        //     </Row>
-        //     )
-        // }
-        function bikeRow(vehicle){
-                return(
-                    <Row style={{alignItems: 'center', marginTop: '1.5%', marginBottom: '1%'}}>
-                        {vehicle.map(v => {
-                            return <BikeCard id = {v._id} brand={v.brand} model={v.model} km={v.kmDriven} image={v.images[0]} price={v.price} year={v.year}/>
-                        })}   
-                    </Row>
-                    )
-        }
+
+    function bikeRow(vehicle){
+        return(
+            <Row style={{alignItems: 'center', marginTop: '1.5%', marginBottom: '1%'}}>
+                {vehicle.map(v => {
+                    return <BikeCard id = {v._id} brand={v.brand} model={v.model} km={v.kmDriven} image={v.images[0]} price={v.price} year={v.year}/>
+                })}   
+            </Row>
+            )
+    }
         return(
             <div>
             <NavBar/>
                 <Container style={{marginTop: '3%', marginBottom: '1%'}}>
+                    <Row style={{marginLeft: '10%'}}>
+                        <FeaturedVehicles/>
+                    </Row>
+
                    {vehicles ?
                         vehicles.map(vehicle => {
                             return(bikeRow(vehicle))
                         })
                     : null}
+
                 </Container>
             </div>
         )

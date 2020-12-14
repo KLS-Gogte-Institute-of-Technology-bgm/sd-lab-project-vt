@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {Button, Row, Col} from 'shards-react'
+import {Row, Col} from 'shards-react'
 import AliceCarousel from 'react-alice-carousel';
 import axios from 'axios'
 import "./alice-carousel.css";

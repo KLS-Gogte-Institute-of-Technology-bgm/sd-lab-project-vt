@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {Button, Container, Row, Col} from 'shards-react'
+import {Col} from 'shards-react'
 import BikeCard from './BikeCard/BikeCard';
 import axios from 'axios';
 

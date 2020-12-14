@@ -6,7 +6,6 @@ import Container from '@material-ui/core/Container';
 import useWindowPosition from '../../hook/useWindowPosition';
 import Avatar from '@material-ui/core/Avatar';
 import pic from './1.png'
-import Footer from '../Footer/Footer'
 
 const useStyles = makeStyles((theme) => ({
   root: {

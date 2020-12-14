@@ -75,7 +75,7 @@ export default class BasicModalExample extends React.Component {
           formData.append('insurance', this.props.insurance)
           formData.append('accident', this.props.accident)
           formData.append('type', this.props.type)
-          formData.append('price', this.props.price)
+          formData.append('price', 0)
           formData.append('year', this.props.year)
           formData.append('isLive', false)
           axios.post("http://localhost:4000/upload", formData, {
@@ -134,7 +134,7 @@ export default class BasicModalExample extends React.Component {
           <ModalHeader>Thank you!✔️</ModalHeader>
           <ModalBody>
             <Row>
-              Your request has been submitted successfully! Please wait for us to contact you!
+              Your request has been submitted successfully! Please wait for us to contact you with our price offer!
             </Row>
           </ModalBody>
         </Modal>

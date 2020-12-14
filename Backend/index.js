@@ -95,9 +95,9 @@ async function submitSellQuery(reqFiles, user, vehicle){
         price: vehicle.price,
         year: vehicle.year,
         papers: vehicle.papers,
-        isLive: false
+        isLive: false,
+        isFeatured: false
     })
-    console.log(reqFiles)
     let result = await V.save()
                     .catch(err => {
                         console.log(err)
@@ -132,6 +132,13 @@ app.get('/allvehicles', (req, res) => {
                 v.push(response.splice(0, 4))
             }
             res.status(200).json({success: true, data: v})
+        })
+})
+
+app.get('/allfeatured', (req, res) => {
+    Vehicle.find({isLive: true, isFeatured: true}).sort({date: 'descending'})
+        .then(response => {
+            res.status(200).json({success: true, data: response})
         })
 })
 
@@ -170,6 +177,14 @@ app.post('/admin/setdisplay',middleware.isLoggedIn, async(req, res) => {
     const id = req.body.id
     const isLiveStatus = req.body.isLiveStatus
     await Vehicle.updateOne({_id: id}, {isLive: isLiveStatus})
+    res.status(200).json({success: true})
+})
+
+app.post('/admin/setfeatured',middleware.isLoggedIn, async(req, res) => {
+    const id = req.body.id
+    const isFeatured = req.body.isFeatured
+    console.log(id, isFeatured)
+    await Vehicle.updateOne({_id: id}, {isFeatured: isFeatured})
     res.status(200).json({success: true})
 })
 
