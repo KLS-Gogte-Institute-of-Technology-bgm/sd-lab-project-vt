@@ -2,12 +2,13 @@ import React, {useState, useEffect} from 'react';
 import { Button,Nav, NavItem, NavLink, Container, NavbarBrand } from 'shards-react';
 import {Redirect} from 'react-router-dom'
 import AllVehicles from './AllVehicles/AllVehicles'
+import BuyingQueries from './BuyingQueries/BuyingQueries';
 
 export default function Dashboard(){
     const [isLoggedIn, setIsLoggedIn] = useState(null)
     const [notLoggedIn, setNotLoggedIn] = useState(null)
     const [showAllVehicles, setAllVehicles] = useState(true)
-    const [buyingEnquries, setBuyingEnquries] = useState(false)
+    const [buyingQueries, setBuyingQueries] = useState(false)
     useEffect(() => {
         async function checkLoggedIn(){
             const token = await localStorage.getItem('token')
@@ -34,7 +35,7 @@ export default function Dashboard(){
                 </NavLink>
               </NavItem>
               <NavItem>
-                <NavLink onClick={() => setBuyingEnquries(!buyingEnquries)}>
+                <NavLink onClick={() => setAllVehicles(!showAllVehicles)}>
                     Buying Enquiries
                 </NavLink>
               </NavItem>
@@ -52,7 +53,7 @@ export default function Dashboard(){
                 <div>
                     <Container>
                         {NavBar()}
-                        {showAllVehicles ? <AllVehicles/> :null}
+                        {showAllVehicles ? <AllVehicles/> : <BuyingQueries/>}
                     </Container>
                 </div>
             : null }

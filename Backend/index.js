@@ -156,11 +156,63 @@ app.get('/admin/getallsellers', middleware.isLoggedIn, (req, res) => {
         })
 })
 
-app.post('/admin/setdisplay', async(req, res) => {
+app.get('/admin/getallbuyers', middleware.isLoggedIn, (req, res) => {
+    User.find({queryType: "Buy"})
+        .then(resp => {
+            res.status(200).json({success: true, data: resp})
+        })
+        .catch(err => {
+            console.log(err)
+        })
+})
+
+app.post('/admin/setdisplay',middleware.isLoggedIn, async(req, res) => {
     const id = req.body.id
     const isLiveStatus = req.body.isLiveStatus
     await Vehicle.updateOne({_id: id}, {isLive: isLiveStatus})
     res.status(200).json({success: true})
+})
+
+app.post('/admin/updateprice',middleware.isLoggedIn, async(req, res) => {
+    const id = req.body.id
+    const newPrice = req.body.newPrice
+    await Vehicle.updateOne({_id: id}, {price: newPrice})
+    res.status(200).json({success: true})
+})
+
+app.post('/admin/updateregistration', middleware.isLoggedIn, async(req, res) => {
+    const id = req.body.id
+    const registrationNo = req.body.registrationNo
+    await Vehicle.updateOne({_id: id}, {registrationNo: registrationNo})
+    res.status(200).json({success: true})
+})
+
+app.post('/admin/updatedescription', middleware.isLoggedIn, async(req, res) => {
+    const id = req.body.id
+    const description = req.body.description
+    await Vehicle.updateOne({_id: id}, {description: description})
+    res.status(200).json({success: true})
+})
+
+app.post('/buyquery', (req, res) => {
+    const id = req.body.vehicle
+    const name = req.body.name
+    const phoneNumber = req.body.phoneNumber
+    const city = req.body.city
+    const newUser = new User({
+        name: name,
+        phoneNumber: phoneNumber,
+        city: city,
+        vehicle: id,
+        queryType: "Buy"
+    })
+    newUser.save()
+        .then(resp => {
+            res.status(200).json({message: "Your request has been submitted successfully! Please wait until we contact you!"})
+        })
+        .catch(err => {
+            res.status(200).json({message: "Some error has occured, please try again later!"})
+        })
 })
 
 app.listen(4000, () => {

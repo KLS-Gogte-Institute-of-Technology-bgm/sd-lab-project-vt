@@ -10,6 +10,7 @@ const vehicleSchema = new mongoose.Schema({
     accident: String,
     type: String,
     images: [String],
+    description: String,
     price: String,
     registrationNo: String,
     isLive: Boolean

@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {Button, Container, Row, Col} from 'shards-react'
+import {Button, Container, Row, Col, Modal, ModalBody, ModalHeader, ModalFooter, FormInput} from 'shards-react'
 import Switch from '@material-ui/core/Switch';
 import AliceCarousel from 'react-alice-carousel';
 import axios from 'axios'
@@ -8,23 +8,86 @@ const handleDragStart = (e) => e.preventDefault();
 
 export default function BikeCard(props){
     const [state, setState] = useState({checkedB: null});
+    const [token, setToken] = useState(null)
+    const [openPriceModal, setPriceModal] = useState(false)
     const [vehicle, setVehicle] = useState(null)
+    const [newPrice, handlePriceChange] = useState(null)
+    const [openRegistrationModal, setRegistrationModal] = useState(false)
+    const [registrationNo, handleRegistrationNoChange] = useState(null)
+    const [openDescriptionModal, setDescriptionModal] = useState(false)
+    const [description, handleDescriptionChange] = useState(null)
+
     const handleChange = async(event) => {
     setState({ ...state, [event.target.name]: event.target.checked });
     await axios.post('http://localhost:4000/admin/setdisplay', {
         id: vehicle._id,
         isLiveStatus: event.target.checked
-    })
+    },{
+        headers: {
+            'x-auth-token': token
+    }})
     };
+
     useEffect(() => {
         async function getVehicle(){
           const response = await axios.get('http://localhost:4000/display/'+props.seller.vehicle)
           setVehicle(response.data.data[0])
           const isLive = response.data.data[0].isLive
           setState({checkedB: isLive})
+          const t = await localStorage.getItem('token')
+          setToken(t)
         }
         getVehicle()
     }, [props.seller.vehicle])
+
+    const updatePrice = () => {
+        axios.post('http://localhost:4000/admin/updateprice', {
+            id: vehicle._id,
+            newPrice: newPrice
+        },{
+        headers: {
+            'x-auth-token': token
+        }})
+        .then(() => {
+            setPriceModal(false)
+        })
+        .catch(err => {
+            console.log(err)
+        })
+    }
+
+    const updateRegistration = () => {
+        axios.post('http://localhost:4000/admin/updateregistration', {
+            id: vehicle._id,
+            registrationNo: registrationNo
+        },{
+            headers: {
+                'x-auth-token': token
+        }})
+        .then(() => {
+            setRegistrationModal(false)
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+    }
+
+    const updateDescription = () => {
+        axios.post('http://localhost:4000/admin/updatedescription', {
+            id: vehicle._id,
+            description: description
+        },{
+            headers: {
+                'x-auth-token': token
+        }})
+        .then(() => {
+            setDescriptionModal(false)
+        })
+        .catch(err => {
+            console.log(err)
+        })
+    }
+
     return(
         <div>
             {vehicle ? 
@@ -50,7 +113,9 @@ export default function BikeCard(props){
                                     Insurance: {vehicle.insurance} <br/>
                                     Accident: {vehicle.accident} <br/>
                                     Type: {vehicle.type} <br/>
-                                    Price: Rs. {vehicle.price} <br/>
+                                    Price: Rs. {vehicle.price} <Button size="sm" style={{padding: '2px'}} onClick={() => setPriceModal(true)}>Change</Button><br/>
+                                    Registration Number: {vehicle.registrationNo} <Button size="sm" style={{padding: '2px'}} onClick={() => setRegistrationModal(true)}>Add</Button><br/>
+                                    Description: {vehicle.description} <Button size="sm" style={{padding: '2px'}} onClick={() => setDescriptionModal(true)}>Change</Button><br/>
                                 </Col>
                                 <Col>
                                     <h4>Seller Details</h4>
@@ -58,6 +123,36 @@ export default function BikeCard(props){
                                     Contact Number: {props.seller.phoneNumber} <br/>
                                     City: {props.seller.city}
                                 </Col>
+                                <Modal open={openPriceModal}>
+                                    <ModalHeader>Enter new price</ModalHeader>
+                                    <ModalBody>
+                                        <FormInput placeholder="Enter new price" onChange={(e) => handlePriceChange(e.target.value)}/>
+                                    </ModalBody>
+                                    <ModalFooter>
+                                        <Button onClick={() => setPriceModal(false)} outline>Close</Button>
+                                        <Button onClick={() => updatePrice()} theme="success">Submit</Button>
+                                    </ModalFooter>
+                                </Modal>
+                                <Modal open={openRegistrationModal}>
+                                    <ModalHeader>Enter Registration Number</ModalHeader>
+                                    <ModalBody>
+                                        <FormInput placeholder="Enter Registration Number" onChange={(e) => handleRegistrationNoChange(e.target.value)}/>
+                                    </ModalBody>
+                                    <ModalFooter>
+                                        <Button onClick={() => setRegistrationModal(false)} outline>Close</Button>
+                                        <Button onClick={() => updateRegistration()} theme="success">Submit</Button>
+                                    </ModalFooter>
+                                </Modal>
+                                <Modal open={openDescriptionModal}>
+                                    <ModalHeader>Enter Description</ModalHeader>
+                                    <ModalBody>
+                                        <FormInput placeholder="Enter Description" onChange={(e) => handleDescriptionChange(e.target.value)}/>
+                                    </ModalBody>
+                                    <ModalFooter>
+                                        <Button onClick={() => setDescriptionModal(false)} outline>Close</Button>
+                                        <Button onClick={() => updateDescription()} theme="success">Submit</Button>
+                                    </ModalFooter>
+                                </Modal>
                             </Row>
                         </Col>
                         <Col sm="12" md="4" lg="3">

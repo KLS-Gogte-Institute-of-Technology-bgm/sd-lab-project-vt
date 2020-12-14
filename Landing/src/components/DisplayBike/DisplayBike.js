@@ -3,7 +3,7 @@ import NavBar from '../NavBar/NavBar';
 import { Container, Row, Col, Card, CardTitle, CardBody, Button, CardSubtitle, CardFooter } from 'shards-react';
 import { useParams, withRouter } from 'react-router-dom'
 import Paper from '@material-ui/core/Paper';
-import { makeStyles } from '@material-ui/core/styles';
+import ContactModal from './ContactModal/ContactModal';
 import AliceCarousel from 'react-alice-carousel';
 import "./alice-carousel.css";
 import axios from 'axios';
@@ -35,7 +35,7 @@ export default function DisplayBike() {
                 <NavBar/>
                 {vehicle ? 
                 <Container style={{marginBottom: '4%'}}>
-                    <Row style={{marginTop: '20px', marginBottom: '-5px'}}><h2>Used bike in Belgaum</h2></Row>
+                    <Row style={{marginTop: '20px', marginBottom: '-5px'}}><h2>Used {vehicle.brand} {vehicle.model}</h2></Row>
                     <Row>
                         <Col sm="12" lg="6" style={{marginTop: '2%'}}>
                         <Row>
@@ -93,7 +93,7 @@ export default function DisplayBike() {
                                             <h4>Rs. {vehicle.price}</h4>
                                         </Col>
                                         <Col style={{textAlign: 'right'}}>
-                                            <Button primary>Contact Us</Button>
+                                            <ContactModal vehicle={vehicle}/>
                                         </Col>
                                     </Row>
                                 </CardFooter>
