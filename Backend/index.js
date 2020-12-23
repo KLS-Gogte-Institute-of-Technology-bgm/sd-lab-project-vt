@@ -7,9 +7,9 @@ const mongoose = require('mongoose')
 const adminRoutes = require('./auth/auth')
 let Vehicle = require('./models/Vehicle')
 let User = require('./models/User');
+require('dotenv').config()
 const middleware = require('./auth/isLoggedIn');
 const app = express()
-
 
 app.use(cors())
 app.use(bodyParser.json())
@@ -20,7 +20,7 @@ app.use('/admin', adminRoutes)
 
 const DIR = './public/'
 
-mongoose.connect("mongodb+srv://pigoauto:vaibhav@cluster0.2czvc.mongodb.net/pigoauto?retryWrites=true&w=majority", {useNewUrlParser: true, useUnifiedTopology: true}, () => {console.log("Connected to db")})
+mongoose.connect(`mongodb+srv://admin:${process.env.DB_PASS}@cluster0.bxhnp.mongodb.net/pigoauto?retryWrites=true&w=majority`, {useNewUrlParser: true, useUnifiedTopology: true}, () => {console.log("Connected to db")})
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
