@@ -48,7 +48,7 @@ export default function BikeCard(props){
                                     Description: {vehicle.description} <br/>
                                 </Col>
                                 <Col>
-                                    <h4>Seller Details</h4>
+                                    <h4>Buyers Details</h4>
                                     Name: {props.buyer.name} <br/>
                                     Contact Number: {props.buyer.phoneNumber} <br/>
                                     City: {props.buyer.city}

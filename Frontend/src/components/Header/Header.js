@@ -15,7 +15,8 @@ const useStyles = makeStyles((theme) => ({
         minHeight: '100vh',
         backgroundImage: `url(${process.env.PUBLIC_URL+"/assets/background.jpg"})`,
         backgroundRepeat: 'no-repeat',
-        backgroundSize: 'cover'
+        backgroundSize: 'cover',
+        height: '100%'
     },
     appbar: {
         background: 'none',
@@ -74,8 +75,8 @@ export default function Header(){
                     open={Boolean(anchorEl)}
                     onClose={handleClose}
                     >
-                        <MenuItem href="/buy" onClick={handleClose}>Buy</MenuItem>
-                        <MenuItem href="/sell" onClick={handleClose}>Sell</MenuItem>
+                        <a href="/buy" style={{color: 'black'}}><MenuItem onClick={handleClose}>Buy</MenuItem></a>
+                        <a href="/sell" style={{color: 'black'}}><MenuItem onClick={handleClose}>Sell</MenuItem></a>
                         <MenuItem onClick={handleClose}>Contact Us</MenuItem>
                     </Menu>
                     </div>
@@ -84,10 +85,10 @@ export default function Header(){
             <Collapse in={checked} {...(checked?{timeout: 1500}:{})} collapsedHeight={50}>
             <div className={classes.container}>
                 <div>
-                <Button variant="outlined" color="primary" size="large" style={{border: "3px solid", borderColor: 'white', color: 'white', margin: '20px'}} href="/buy">
+                <Button variant="outlined" color="primary" size="large" style={{border: "8px solid", borderColor: 'white', color: 'white', margin: '20px'}} href="/buy">
                     <span style={{fontSize: '1.3em', fontWeight: 'bold'}}>Buy</span>
                 </Button>
-                <Button variant="outlined" color="secondary" size="large" style={{border: "3px solid", borderColor: 'red', color: 'red', margin: '20px'}} href="/sell">
+                <Button variant="outlined" color="secondary" size="large" style={{border: "8px solid", borderColor: 'red', color: 'red', margin: '20px'}} href="/sell">
                     <span style={{fontSize: '1.3em', fontWeight: 'bold'}}>Sell</span>
                 </Button>
                 </div>

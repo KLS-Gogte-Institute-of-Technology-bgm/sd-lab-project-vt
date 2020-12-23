@@ -11,7 +11,7 @@ const useStyles = makeStyles({
     background: 'black',
     bottom: 0,
     position: 'static',
-    // //marginTop: '10%'
+    //marginTop: '10%'
   },
   icon: {
       color: '#fff',
@@ -24,15 +24,11 @@ export default function LabelBottomNavigation() {
 
   return (
     <BottomNavigation className={classes.root}>
-          <Col sm="12" md="4" lg="3">
+          
+          <Col sm="12" md="8" lg="6" style={{textAlign: 'center'}}>
+              <span style={{color: 'white'}}>Powered by <a href="https://vaibhavmm.in" target="_blank" style={{color: 'white'}}>Vaibhav Muchandi</a></span>
           </Col>
-          <Col sm="12" md="4" lg="6" style={{textAlign: 'center'}}>
-              <TwitterIcon className={classes.icon}/>
-              <InstagramIcon className={classes.icon}/> <br/>
-              <span style={{color: 'white'}}>Powered by Vaibhav Muchandi</span>
-          </Col>
-          <Col sm="12" md="4" lg="3">
-          </Col>
+          
     </BottomNavigation>
   );
 }

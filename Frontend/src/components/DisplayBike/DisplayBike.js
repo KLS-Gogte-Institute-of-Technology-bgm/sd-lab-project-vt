@@ -79,10 +79,6 @@ export default function DisplayBike() {
                                         <td style={{fontWeight: 'bold'}}>Insurance Valid</td>
                                         <td>{vehicle.insurance}</td>
                                     </tr>
-                                    <tr>
-                                        <td style={{fontWeight: 'bold'}}>Accident</td>
-                                        <td>{vehicle.accident}</td>
-                                    </tr>
                                     </table>
                                     <hr/>
                                     <span style={{fontWeight: 'bold'}}>Description - </span>
