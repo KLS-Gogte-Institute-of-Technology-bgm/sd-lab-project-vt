@@ -7,6 +7,7 @@ const mongoose = require('mongoose')
 const adminRoutes = require('./auth/auth')
 let Vehicle = require('./models/Vehicle')
 let User = require('./models/User');
+const {Storage} = require('@google-cloud/storage');
 require('dotenv').config()
 const middleware = require('./auth/isLoggedIn');
 const app = express()
@@ -22,33 +23,29 @@ const DIR = './public/'
 
 mongoose.connect(`mongodb+srv://admin:${process.env.DB_PASS}@cluster0.bxhnp.mongodb.net/pigoauto?retryWrites=true&w=majority`, {useNewUrlParser: true, useUnifiedTopology: true}, () => {console.log("Connected to db")})
 
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, DIR);
-    },
-    filename: (req, file, cb) => {
-        const fileName = file.originalname.toLowerCase().split(' ').join('-');
-        cb(null, uuidv4() + '-' + fileName)
-    }
-});
+const CLOUD_BUCKET = process.env.GCLOUD_STORAGE_BUCKET;
+const store = new Storage({
+  projectId: process.env.GCLOUD_PROJECT_ID,
+  keyFilename: './pigoapi-4f3f64a4042c.json'
+})
+const bucket = store.bucket(CLOUD_BUCKET)
 
-var upload = multer({
-    storage: storage,
-    fileFilter: (req, file, cb) => {
-        if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg") {
-            cb(null, true);
-        } else {
-            cb(null, false);
-            return cb(new Error('Only .png, .jpg and .jpeg format allowed!'));
-        }
-    }
+const getPublicUrl = (filename) => {
+  return `https://storage.googleapis.com/${CLOUD_BUCKET}/${filename}`
+}
+
+
+
+const upload = multer({
+  storage: multer.memoryStorage(),
+  limits: {fileSize: 10 * 1024 * 1024}
 });
 
 app.get('/', (req, res) => {
     res.send("Hello")
 })
 
-app.post('/upload', upload.array('images', 6), async(req, res, next) => {
+app.post('/upload', upload.array('images'), async(req, res, next) => {
     const user = {
         name: req.body.name,
         phoneNumber: req.body.phoneNumber,
@@ -65,25 +62,65 @@ app.post('/upload', upload.array('images', 6), async(req, res, next) => {
         accident: req.body.accident,
         type: req.body.type,
         price: req.body.price,
+        images: [],
         year: req.body.year
     }
-    const reqFiles = []
-    const url = req.protocol+'://'+req.get('host')
-    console.log(vehicle, user)
-    for(let i = 0; i<req.files.length; i++){
-        reqFiles.push(url+'/public/'+req.files[i].filename)
-        console.log(req.files[i].filename)
-    }
-    console.log(vehicle, user)
-    const result = await submitSellQuery(reqFiles, user, vehicle)
-    if(result){
-        res.status(200).json({message: "Your request has been submitted successfully! Please wait until we contact you!"})
-    } else {
-        res.status(200).json({message: "Some error has occured, please try again after some time!"})
-    }
+    if (!req.files) {
+        return next()
+      }
+      let promises = [];
+      req.files.forEach((image, index) => {
+        const gcsname = uuidv4() + Date.now() + image.originalname
+        const file = bucket.file(gcsname)
+    
+        const promise = new Promise((resolve, reject) => {
+          const stream = file.createWriteStream({
+            metadata: {
+              contentType: image.mimetype
+            }
+          });
+          
+          stream.on('error', (err) => {
+            req.files[index].cloudStorageError = err
+            reject(err)
+          });
+    
+          stream.on('finish', async () => {
+            try {
+              req.files[index].cloudStorageObject = gcsname
+              await file.makePublic()
+              req.files[index].cloudStoragePublicUrl = await getPublicUrl(gcsname)
+              await vehicle.images.push(getPublicUrl(gcsname))
+              resolve()
+            } catch (error) {
+              reject(error)
+            }
+          });
+    
+          stream.end(image.buffer);
+        })
+        promises.push(promise)
+      });
+    
+      Promise.all(promises)
+        .then(async _ => {
+            submitSellQuery(user, vehicle)
+                .then((result) => {
+                    console.log(result)
+                        if(result){
+                            res.status(200).json({message: "Your request has been submitted successfully! Please wait until we contact you!"})
+                        } else {
+                            res.status(200).json({message: "Some error has occured, please try again after some time!"})
+                        }
+                })
+                .catch(e => {
+                    console.log(err)
+                })
+        })
+        .catch(next);
 })
 
-async function submitSellQuery(reqFiles, user, vehicle){
+async function submitSellQuery(user, vehicle){
     const V = new Vehicle({
         brand: vehicle.brand,
         model: vehicle.model,
@@ -91,9 +128,9 @@ async function submitSellQuery(reqFiles, user, vehicle){
         insurance: vehicle.insurance,
         accident: vehicle.accident,
         type: vehicle.type,
-        images: reqFiles,
+        images: vehicle.images,
         price: vehicle.price,
-        year: vehicle.year,
+        yearOfPurchase: vehicle.year,
         papers: vehicle.papers,
         isLive: false,
         isFeatured: false
@@ -183,7 +220,6 @@ app.post('/admin/setdisplay',middleware.isLoggedIn, async(req, res) => {
 app.post('/admin/setfeatured',middleware.isLoggedIn, async(req, res) => {
     const id = req.body.id
     const isFeatured = req.body.isFeatured
-    console.log(id, isFeatured)
     await Vehicle.updateOne({_id: id}, {isFeatured: isFeatured})
     res.status(200).json({success: true})
 })
@@ -230,6 +266,8 @@ app.post('/buyquery', (req, res) => {
         })
 })
 
-app.listen(4000, () => {
-    console.log("Server running on port 4000")
+const PORT = process.env.PORT || 8080;
+
+app.listen(PORT, () => {
+    console.log("Server running")
 })

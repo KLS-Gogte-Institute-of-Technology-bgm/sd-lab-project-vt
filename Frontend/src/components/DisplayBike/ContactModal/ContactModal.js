@@ -27,7 +27,7 @@ export default class BasicModalExample extends React.Component {
     this.setState({
       openOtp: !this.state.openOtp
     });
-    axios.get('https://2factor.in/API/V1/2ab4e5d4-685c-11ea-9fa5-0200cd936042/SMS/'+this.state.phoneNumber+'/AUTOGEN')
+    axios.get('https://2factor.in/API/V1/47bfce72-412d-11eb-83d4-0200cd936042/SMS/'+this.state.phoneNumber+'/AUTOGEN')
       .then(resp => {
         if(resp.data.Status == "Success"){
           this.setState({otpMessageText: "OTP has been sent successfully!", otpMessage: true, sessionID: resp.data.Details})
@@ -56,7 +56,7 @@ export default class BasicModalExample extends React.Component {
   submit = () => {
     this.setState({isLoading: true})
     // console.log(this.props.images)
-    axios.get('https://2factor.in/API/V1/2ab4e5d4-685c-11ea-9fa5-0200cd936042/SMS/VERIFY/'+this.state.sessionID+'/'+this.state.otp)
+    axios.get('https://2factor.in/API/V1/47bfce72-412d-11eb-83d4-0200cd936042/SMS/VERIFY/'+this.state.sessionID+'/'+this.state.otp)
       .then(resp => {
         if(resp.data.Status == "Success"){
           this.setState({otpMessageText: "OTP Verified!"})

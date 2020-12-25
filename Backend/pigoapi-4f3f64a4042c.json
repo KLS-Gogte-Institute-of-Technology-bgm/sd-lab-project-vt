@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "pigoapi",
+  "private_key_id": "4f3f64a4042cdd9143b712fa012388a09cf7216b",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC0PkABNl2azLMc\nluqBOHioEu8dXFUOKubsAB8GKG8iyLgacW5bFAlk+te2hUxNhqV9FezK1mngvCcO\nrjh+TcLMsU0akHi/75t2ctcaxTnwIGG2LK3qNzkCE2/2Cz5m760b71FAxuDqUULp\nggY64Ntd7jbUOqsMC7TLXeaGLukUcYoQRWorgJisBFz9FslgTuW0LRLbL/oNf119\ntdEPNDnZBy9lyZxs4hGE6KAkhKxRW5d+sowrLvgOq8m0gfGZKyD6XugfWspiwfFV\nohThGML/u7ix5wZslfb9axiARi9YiLKjTW0EE0gvhxK9PtVaT5OQUjPHisiSHqQF\ntERPWVkJAgMBAAECggEABpICWUj3Do6JtPAXalB5rX7LMqHMA/Eya8XxW5MbwgPZ\nGjWqVS2czg6K0H95cZYH8FBdSmOYhnW1YsadDpWdFUMdUWuUy0Jbw2yaRMKNwyAb\nD73/NPuAW4AD488zHiN8hvkpWBgn2MLPkp2Hxputw3XMj933oD/I/mTU421QV8tg\nF2OO7zKre2340m5u6TyBcBnyk57q56sDfw0J2ySHOfofprvjLglKvUg1xIV8K70M\nMsOc+QSvKrU1OZdpFBVgTe9gUTNUnuT01r9nmqS5mAxufk3dsNT7xazBmsASnUh6\n/s56LxlkwqGMt/vkrzV+v0c9oHIV9gsy6s8DeFLVpQKBgQDcs7AP20irm3PMzXK8\n8hXHFtRm2mMs+Vjp5DrEPC0WEvLOKUiiNrEf4pEr45UnN4x5wluO6CUW4U8bPDec\nVWyhHCbaT6JjW4yIoU5Sr+EHXPVIrPXjYgEMgMu+GYeTPaRsTvyoJyf675kskUhV\neqJ8WXyRMASHrbxnlbw8UBxPHwKBgQDREgoDU8wNamvjZ4zCNKJ9mTuqqAU3h+Os\ntS1e40ZSwwqrFVVfl1Uv8EAyDxSFuEWjtABvGlr6bKby9xjcjVAV2wnXhxrmTrpr\noR6tgXGSnmECGoyfl1CXeeMMA8PtuJ4p5ttTNsM9Y0IWcVXnzkweGLl2efrMLvLL\n0E+oDf5a1wKBgG1Rm+3ewlouP+e8BA9PIjZhOohPuDw4ri/8WpeE7xg1/orbrByd\nVpLimOHScrjgLPbKrKtWlbiFlbd51lnbflk3Jo+QTnFEkZHDxJX0hFQvWVfMRGeC\nzd4xlbntz1fBesYjQcbQzl7fe1G2DMw6WG2brbYEwNmr1tzAMGL3k24lAoGAROtR\naa9iALooPpqQCCUZu5Wb2bHxplChePlwr2r0b6vkBGnP7ucQKfFk+BuIhFwueLyJ\nuBZUD2Fp14YlJ+9dixbds7LR50Hkqj4+wqt9KPwUtoDSAnn7EzQW6IsFN4Q4f0+e\n1VukGMRzsLpDu1qCNRmpaajkSBLh7tYIrDmQs5kCgYEAj0264qeaHS/Jz0tSkWk/\nNzSHsXJ9XEV928UljwPxIgwZIDDM6BA352Y1J086llfxpk//nVittmK/tzmjwHm7\n9F9pc1qBj8oEEPyupaS52r0KLvrRQHTCwfp3tNERMJRgLluT5jT0YFKxx5ZFKiJc\nwF43c3mzOtIydGpXB9rvOAY=\n-----END PRIVATE KEY-----\n",
+  "client_email": "pigoapi@appspot.gserviceaccount.com",
+  "client_id": "116194779163577330975",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/pigoapi%40appspot.gserviceaccount.com"
+}

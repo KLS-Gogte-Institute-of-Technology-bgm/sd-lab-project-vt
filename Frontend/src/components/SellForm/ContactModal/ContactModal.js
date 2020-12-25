@@ -5,6 +5,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import axios from 'axios';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
+
 export default class BasicModalExample extends React.Component {
   constructor(props) {
     super(props);
@@ -26,7 +27,7 @@ export default class BasicModalExample extends React.Component {
     this.setState({
       openOtp: !this.state.openOtp
     });
-    axios.get('https://2factor.in/API/V1/2ab4e5d4-685c-11ea-9fa5-0200cd936042/SMS/'+this.state.phoneNumber+'/AUTOGEN')
+    axios.get('https://2factor.in/API/V1/47bfce72-412d-11eb-83d4-0200cd936042/SMS/'+this.state.phoneNumber+'/AUTOGEN')
       .then(resp => {
         if(resp.data.Status == "Success"){
           this.setState({otpMessageText: "OTP has been sent successfully!", otpMessage: true, sessionID: resp.data.Details})
@@ -56,7 +57,7 @@ export default class BasicModalExample extends React.Component {
   submit = () => {
     this.setState({isLoading: true})
     console.log(this.props.images)
-    axios.get('https://2factor.in/API/V1/2ab4e5d4-685c-11ea-9fa5-0200cd936042/SMS/VERIFY/'+this.state.sessionID+'/'+this.state.otp)
+    axios.get('https://2factor.in/API/V1/47bfce72-412d-11eb-83d4-0200cd936042/SMS/VERIFY/'+this.state.sessionID+'/'+this.state.otp)
       .then(resp => {
         if(resp.data.Status == "Success"){
           this.setState({otpMessageText: "OTP Verified!"})
@@ -78,7 +79,7 @@ export default class BasicModalExample extends React.Component {
           formData.append('price', 0)
           formData.append('year', this.props.year)
           formData.append('isLive', false)
-          axios.post("http://localhost:4000/upload", formData, {
+          axios.post("https://pigoapi.el.r.appspot.com/upload", formData, {
           }).then(res => {
               this.setState({openOtp: false, open: false, thankYouModal: true})
           })
@@ -91,6 +92,7 @@ export default class BasicModalExample extends React.Component {
 
   render() {
     const { open, openOtp, thankYouModal } = this.state;
+    console.log(process.env.OTP_API)
     return (
       <div>
         <Button onClick={this.toggle} theme='success'>Proceed</Button>

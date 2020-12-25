@@ -1,0 +1,6 @@
+runtime: nodejs14
+
+env_variables:
+  GCLOUD_STORAGE_BUCKET: pigoimages
+  DB_PASS: rushikesh123
+  GCLOUD_PROJECT_ID: pigoapi

@@ -41,6 +41,9 @@ router.post('/register', async (req, res) => {
                 })
             })
         })
+        .catch(e => {
+            console.log(e)
+        })
 })
 
 // @route POST api/user/login
