@@ -17,7 +17,7 @@ export default function DisplayBike() {
         
         useEffect(() => {
             function fetchVehicle(){
-                axios.get('http://localhost:4000/display/'+id)
+                axios.get('https://pigoapi.el.r.appspot.com/display/'+id)
                 .then(response => {
                     setVehicle(response.data.data[0])
                     console.log(vehicle)
@@ -27,7 +27,7 @@ export default function DisplayBike() {
                 })
             }
             fetchVehicle()
-        }, [])
+        }, [id, vehicle])
 
         
         return(

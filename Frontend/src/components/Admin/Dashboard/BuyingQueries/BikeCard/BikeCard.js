@@ -12,11 +12,11 @@ export default function BikeCard(props){
     useEffect(() => {
         async function getVehicle(){
             console.log(props.buyer)
-          const response = await axios.get('http://localhost:4000/display/'+props.buyer.vehicle)
+          const response = await axios.get('https://pigoapi.el.r.appspot.com/display/'+props.buyer.vehicle)
           setVehicle(response.data.data[0])
         }
         getVehicle()
-    }, [props.buyer.vehicle])
+    }, [props.buyer, props.buyer.vehicle])
 
     return(
         <div>

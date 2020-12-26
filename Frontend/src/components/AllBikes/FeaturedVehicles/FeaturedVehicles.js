@@ -7,7 +7,7 @@ export default function FeaturedVehicles(props){
     const [vehicles, setVehicles] = useState(null)
     useEffect(() => {
         function getAllVehicles(){
-            axios.get('http://localhost:4000/allfeatured')
+            axios.get('https://pigoapi.el.r.appspot.com/allfeatured')
             .then(resp => {
                 if(resp.data.data[0]){
                     setVehicles(resp.data.data)
@@ -26,7 +26,7 @@ export default function FeaturedVehicles(props){
         <div>
             { vehicles ? 
             <div className={classes.box}>
-                <span style={{fontSize: '18px', fontWeight: 'bold', marginLeft: '5%'}}>{}Featured Vehicles <span>🔥</span> -></span>
+                <span style={{fontSize: '18px', fontWeight: 'bold', marginLeft: '5%'}}>{}Featured Vehicles <span>🔥</span> {"->"}</span>
                 <div style={{width: '80%', marginLeft: '10%', overflowX: 'scroll', overflowY: 'hidden', whiteSpace: 'nowrap'}}>
                     <div className={classes.scrollingWrap}>
                     {vehicles ?

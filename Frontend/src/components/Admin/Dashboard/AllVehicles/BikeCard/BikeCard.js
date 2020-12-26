@@ -20,7 +20,7 @@ export default function BikeCard(props){
 
     const handleChange = async(event) => {
         setState({ ...state, [event.target.name]: event.target.checked });
-        await axios.post('http://localhost:4000/admin/setdisplay', {
+        await axios.post('https://pigoapi.el.r.appspot.com/admin/setdisplay', {
                 id: vehicle._id,
                 isLiveStatus: event.target.checked
             },{
@@ -31,7 +31,7 @@ export default function BikeCard(props){
 
     const handleChangeC = async(event) => {
         setCheckedC(event.target.checked)
-        await axios.post('http://localhost:4000/admin/setfeatured', {
+        await axios.post('https://pigoapi.el.r.appspot.com/admin/setfeatured', {
             id: vehicle._id,
             isFeatured: event.target.checked
         },{
@@ -42,11 +42,11 @@ export default function BikeCard(props){
 
     useEffect(() => {
         async function getVehicle(){
-          const response = await axios.get('http://localhost:4000/display/'+props.seller.vehicle)
+          const response = await axios.get('https://pigoapi.el.r.appspot.com/display/'+props.seller.vehicle)
           setVehicle(response.data.data[0])
+          console.log(response)
           const isLive = response.data.data[0].isLive
           const isFeatured = response.data.data[0].isFeatured
-          console.log(isFeatured)
           setState({checkedB: isLive})
           setCheckedC(isFeatured)
           const t = await localStorage.getItem('token')
@@ -56,7 +56,7 @@ export default function BikeCard(props){
     }, [props.seller.vehicle])
 
     const updatePrice = () => {
-        axios.post('http://localhost:4000/admin/updateprice', {
+        axios.post('https://pigoapi.el.r.appspot.com/admin/updateprice', {
             id: vehicle._id,
             newPrice: newPrice
         },{
@@ -72,7 +72,7 @@ export default function BikeCard(props){
     }
 
     const updateRegistration = () => {
-        axios.post('http://localhost:4000/admin/updateregistration', {
+        axios.post('https://pigoapi.el.r.appspot.com/admin/updateregistration', {
             id: vehicle._id,
             registrationNo: registrationNo
         },{
@@ -88,7 +88,7 @@ export default function BikeCard(props){
     }
 
     const updateDescription = () => {
-        axios.post('http://localhost:4000/admin/updatedescription', {
+        axios.post('https://pigoapi.el.r.appspot.com/admin/updatedescription', {
             id: vehicle._id,
             description: description
         },{

@@ -8,7 +8,7 @@ export default function AllVehicles(){
     useEffect(() => {
         async function getAllSellers(){
             const token = await localStorage.getItem('token')
-            const response = await axios.get('http://localhost:4000/admin/getallsellers', {
+            const response = await axios.get('https://pigoapi.el.r.appspot.com/admin/getallsellers', {
                 headers: {
                     'x-auth-token': token
                 }

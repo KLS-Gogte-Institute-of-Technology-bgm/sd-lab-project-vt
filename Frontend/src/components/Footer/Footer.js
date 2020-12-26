@@ -26,7 +26,7 @@ export default function LabelBottomNavigation() {
     <BottomNavigation className={classes.root}>
           
           <Col sm="12" md="8" lg="6" style={{textAlign: 'center'}}>
-              <span style={{color: 'white'}}>Powered by <a href="https://vaibhavmm.in" target="_blank" style={{color: 'white'}}>Vaibhav Muchandi</a></span>
+              <span style={{color: 'white'}}>Powered by <a href="https://vaibhavmm.in" target="_blank" rel="noopener noreferrer" style={{color: 'white'}}>Vaibhav Muchandi</a></span>
           </Col>
           
     </BottomNavigation>

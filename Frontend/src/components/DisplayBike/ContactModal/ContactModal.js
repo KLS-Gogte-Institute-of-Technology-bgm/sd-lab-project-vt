@@ -60,7 +60,7 @@ export default class BasicModalExample extends React.Component {
       .then(resp => {
         if(resp.data.Status == "Success"){
           this.setState({otpMessageText: "OTP Verified!"})
-          axios.post('http://localhost:4000/buyquery', {
+          axios.post('https://pigoapi.el.r.appspot.com/buyquery', {
               name: this.state.name,
               phoneNumber: this.state.phoneNumber,
               city: this.state.city,

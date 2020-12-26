@@ -16,7 +16,7 @@ export default function AdminLogin(){
         setPassword(event.target.value)
     }
     const login = () => {
-        axios.post('http://localhost:4000/admin/login', {
+        axios.post('https://pigoapi.el.r.appspot.com/admin/login', {
             username: username,
             password: password
         })
@@ -41,7 +41,7 @@ export default function AdminLogin(){
                     <CardTitle>Admin Login</CardTitle>
                     <CardBody>
                         <Row style={{margin: '10px'}}><FormInput placeholder="Username" onChange={onUsernameChange}/></Row>
-                        <Row style={{margin: '10px'}}><FormInput placeholder="Password" onChange={onPasswordChange}/></Row>
+                        <Row style={{margin: '10px'}}><FormInput placeholder="Password" type="password" onChange={onPasswordChange}/></Row>
                     </CardBody>
                     <CardFooter><Button onClick={login}>Login</Button></CardFooter>
                     {message ? <p>{message}</p>: null}

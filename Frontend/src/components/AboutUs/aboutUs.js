@@ -1,12 +1,12 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
 import useWindowPosition from '../../hook/useWindowPosition';
 import Avatar from '@material-ui/core/Avatar';
 import picr from './picr.jfif'
 import pic from './1.png'
+import {Row, Col} from 'shards-react'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -17,13 +17,14 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     padding: theme.spacing(10),
-    textAlign: 'center',
+    //textAlign: 'center',
     color: 'white',
     backgroundColor: 'black'
   },
   large: {
-    width: theme.spacing(15),
-    height: theme.spacing(15),
+    height: '100px',
+    width: '100px',
+    marginLeft: '15%'
   },
   poweredTitle: {
     fontSize: '1.5em',
@@ -57,25 +58,28 @@ export default function AutoGrid() {
                 <span className={classes.tcText}>To prevent spam, we will utilize OTP services, your personal details are not shared with anyone else and our team will require atleast 2 days to get in touch with you either for buying or selling of a vehicle.</span>
                 <hr className={classes.hr}/>
         </Grid>
-        <Grid item xs>
-          <Paper className={classes.paper}>
-              <Grid item xs={12}>
-                    <Avatar alt='ceo' src={picr} className={classes.large}/>
-                    <h5 style={{color: 'white'}}>Rushikesh Pise, Co-Founder</h5>
-              </Grid>
-          </Paper>
         </Grid>
-        <Grid item xs>
-          <Paper className={classes.paper}>
-            <Grid item xs={12}>
-                    <Avatar alt='ceo' src={pic} className={classes.large}/>
-                    <h5 style={{color: 'white'}}>Akshay Godse, Co-Founder</h5>
-              </Grid>
-          </Paper>
-        </Grid>
-      </Grid>
+        <Container>
+        <Row style={{marginLeft: '15%'}}>
+        <Col>
+          <Row>
+            <Avatar alt='ceo' src={picr} className={classes.large}/>
+          </Row>
+          <Row>
+            <h5 style={{color: 'white'}}>Rushikesh Pise, Co-Founder</h5>
+          </Row>
+        </Col>
+        <Col>
+          <Row>
+            <Avatar alt='ceo' src={pic} className={classes.large}/>
+          </Row>
+          <Row>
+            <h5 style={{color: 'white'}}>Akshay Godse, Co-Founder</h5>
+          </Row>
+        </Col>
+        </Row>
+        </Container>
       </Container>
-      
     </div>
   );
 }

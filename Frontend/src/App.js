@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, withRouter } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import Landing from './components/Landing/Landing.js';
 import Footer from './components/Footer/Footer';
 import AllBikes from './components/AllBikes/AllBikes';

@@ -9,7 +9,7 @@ export default function AllBikes(){
     const [vehicles, setVehicles] = useState(null)
     useEffect(() => {
         function getAllVehicles(){
-            axios.get('http://localhost:4000/allvehicles')
+            axios.get('https://pigoapi.el.r.appspot.com/allvehicles')
             .then(resp => {
                 setVehicles(resp.data.data)
             })
