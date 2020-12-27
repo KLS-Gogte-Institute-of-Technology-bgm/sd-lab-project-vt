@@ -1,0 +1,15 @@
+.box {
+    border-radius: 10px;
+    background: #ededed;
+    box-shadow:  18px 10px 25px #9a9a9a, 
+                -18px -10px 25px #ffffff;
+}
+
+.scrollingWrapper {
+    overflow-x: scroll;
+    overflow-y: hidden;
+    white-space: nowrap;
+  }
+  .card {
+    display: inline-block;
+  }
